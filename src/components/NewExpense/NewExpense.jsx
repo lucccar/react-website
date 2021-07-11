@@ -13,8 +13,12 @@ const NewExpense = (props) => {
         props.onAddExpense(expenseData);
     };
 
-    const expenseFlagHandler = () => {
+    const setExpenseFlagTrue = () => {
         setExpenseFlag(true);
+    };
+
+    const setExpenseFlagFalse = () => {
+        setExpenseFlag(false);
     };
 
     if (expenseFlag) {
@@ -22,7 +26,7 @@ const NewExpense = (props) => {
             <div className="new-expense">
                 <ExpenseForm
                     onSaveNewExpenseData={saveNewExpenseData}
-                    onAddExpenseFlag={setExpenseFlag}
+                    onCancel={setExpenseFlagFalse}
                 />
             </div>
         );
@@ -30,9 +34,20 @@ const NewExpense = (props) => {
 
     return (
         <div className="new-expense">
-            <button className="add-new-expense" onClick={expenseFlagHandler}>
-                Add New Expense
-            </button>
+            {expenseFlag && (
+                <button
+                    className="add-new-expense"
+                    onClick={setExpenseFlagTrue}
+                >
+                    Add New Expense
+                </button>
+            )}
+            {!expenseFlag && (
+                <ExpenseForm
+                    onSaveNewExpenseData={saveNewExpenseData}
+                    onCancel={setExpenseFlagFalse}
+                />
+            )}
         </div>
     );
 };
